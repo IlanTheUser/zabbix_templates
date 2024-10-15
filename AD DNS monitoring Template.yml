@@ -1,0 +1,270 @@
+zabbix_export:
+  version: '7.0'
+  templates:
+    - name: 'Template Windows Server 2019 AD DNS'
+      description: 'Template for monitoring Windows Server 2019 with Active Directory and DNS services'
+      groups:
+        - name: 'Templates/Windows'
+      # Items
+      items:
+        - name: 'CPU usage'
+          type: ZABBIX_ACTIVE
+          key: 'system.cpu.util[,total]'
+          units: '%'
+          description: 'CPU usage percentage'
+
+        - name: 'Memory utilization'
+          type: ZABBIX_ACTIVE
+          key: 'vm.memory.util'
+          units: '%'
+          description: 'Memory utilization percentage'
+
+        - name: 'Disk space usage'
+          type: ZABBIX_ACTIVE
+          key: 'vfs.fs.size[C:,pused]'
+          units: '%'
+          description: 'Disk space usage percentage for C: drive'
+
+        - name: 'Network traffic in'
+          type: ZABBIX_ACTIVE
+          key: 'net.if.in[*]'
+          units: 'bps'
+          description: 'Incoming network traffic'
+
+        - name: 'Network traffic out'
+          type: ZABBIX_ACTIVE
+          key: 'net.if.out[*]'
+          units: 'bps'
+          description: 'Outgoing network traffic'
+
+        - name: 'AD Replication Status'
+          type: ZABBIX_ACTIVE
+          key: 'perf_counter["\NTDS\DRA Inbound Bytes Total/sec"]'
+          description: 'Active Directory replication status'
+
+        - name: 'SYSVOL Replication Status'
+          type: ZABBIX_ACTIVE
+          key: 'perf_counter["\NTDS\DRA Inbound Objects/sec"]'
+          description: 'SYSVOL replication status'
+
+        - name: 'AD Database Size'
+          type: ZABBIX_ACTIVE
+          key: 'perf_counter["\NTDS\Database Size (MB)"]'
+          units: 'MB'
+          description: 'Active Directory database size'
+
+        - name: 'LDAP Query Response Time'
+          type: ZABBIX_ACTIVE
+          key: 'perf_counter["\NTDS\LDAP Client Sessions"]'
+          description: 'LDAP query response times'
+
+        - name: 'Domain Controller Availability'
+          type: ZABBIX_ACTIVE
+          key: 'service_state[NTDS]'
+          description: 'Domain Controller availability'
+
+        - name: 'Group Policy Processing Time'
+          type: ZABBIX_ACTIVE
+          key: 'perf_counter["\Group Policy\Group Policy Client Processing Time"]'
+          units: 's'
+          description: 'Group Policy processing times'
+
+        - name: 'AD Tombstone Lifetime'
+          type: ZABBIX_ACTIVE
+          key: 'wmi.get[root\microsoftdns,SELECT TombstoneLifetime FROM MicrosoftDNS_DomainInfo]'
+          description: 'Active Directory tombstone lifetime'
+
+        - name: 'AD Database Integrity'
+          type: ZABBIX_ACTIVE
+          key: 'eventlog[System,,,"Source=NTDS"]'
+          description: 'Active Directory database integrity'
+
+        - name: 'AD Site Link Utilization'
+          type: ZABBIX_ACTIVE
+          key: 'perf_counter["\NTDS\DRA Outbound Bytes Total/sec"]'
+          description: 'Active Directory site link utilization'
+
+        - name: 'DNS Service Availability'
+          type: ZABBIX_ACTIVE
+          key: 'service_state[DNS]'
+          description: 'DNS service availability'
+
+        - name: 'DNS Query Response Time'
+          type: ZABBIX_ACTIVE
+          key: 'perf_counter["\DNS\Recursive Query Time"]'
+          units: 's'
+          description: 'DNS query response time'
+
+        - name: 'DNS Query Success Rate'
+          type: ZABBIX_ACTIVE
+          key: 'perf_counter["\DNS\Recursive Queries/sec"]'
+          description: 'DNS query success rate'
+
+        - name: 'DNS Zone Transfer Status'
+          type: ZABBIX_ACTIVE
+          key: 'perf_counter["\DNS\Zone Transfer Success/sec"]'
+          description: 'DNS zone transfer status'
+
+        - name: 'DNS Cache Size'
+          type: ZABBIX_ACTIVE
+          key: 'perf_counter["\DNS\Caching Memory"]'
+          units: 'B'
+          description: 'DNS cache size'
+
+        - name: 'DNS Cache Hit Ratio'
+          type: ZABBIX_ACTIVE
+          key: 'perf_counter["\DNS\Cache Hit Ratio"]'
+          units: '%'
+          description: 'DNS cache hit ratio'
+
+        - name: 'Event Log - Directory Service'
+          type: ZABBIX_ACTIVE
+          key: 'eventlog[Directory Service]'
+          description: 'Directory Service event log'
+
+        - name: 'Event Log - DNS Server'
+          type: ZABBIX_ACTIVE
+          key: 'eventlog[DNS Server]'
+          description: 'DNS Server event log'
+
+        - name: 'Event Log - System'
+          type: ZABBIX_ACTIVE
+          key: 'eventlog[System]'
+          description: 'System event log'
+
+        - name: 'Backup Status'
+          type: ZABBIX_ACTIVE
+          key: 'wmi.get[root\cimv2,SELECT * FROM Win32_NTLogEvent WHERE Logfile = 'Application' AND SourceName = 'Backup' AND EventType = 1]'
+          description: 'Backup status and success rate'
+
+        - name: 'Failed Logon Attempts'
+          type: ZABBIX_ACTIVE
+          key: 'eventlog[Security,,,"Event ID=4625"]'
+          description: 'Failed logon attempts'
+
+        - name: 'Account Lockouts'
+          type: ZABBIX_ACTIVE
+          key: 'eventlog[Security,,,"Event ID=4740"]'
+          description: 'Account lockouts'
+
+        - name: 'Server Uptime'
+          type: ZABBIX_ACTIVE
+          key: 'system.uptime'
+          units: 'uptime'
+          description: 'Server uptime'
+
+        - name: 'NTDS Service Status'
+          type: ZABBIX_ACTIVE
+          key: 'service_state[NTDS]'
+          description: 'NTDS service status'
+
+        - name: 'Netlogon Service Status'
+          type: ZABBIX_ACTIVE
+          key: 'service_state[Netlogon]'
+          description: 'Netlogon service status'
+
+        - name: 'DNS Server Service Status'
+          type: ZABBIX_ACTIVE
+          key: 'service_state[DNS]'
+          description: 'DNS Server service status'
+
+        - name: 'AD Forest Functional Level'
+          type: ZABBIX_ACTIVE
+          key: 'wmi.get[root\microsoftdns,SELECT ForestFunctionalLevel FROM MicrosoftDNS_DomainInfo]'
+          description: 'Active Directory forest functional level'
+
+        - name: 'AD Domain Functional Level'
+          type: ZABBIX_ACTIVE
+          key: 'wmi.get[root\microsoftdns,SELECT DomainFunctionalLevel FROM MicrosoftDNS_DomainInfo]'
+          description: 'Active Directory domain functional level'
+
+        - name: 'Time Synchronization Status'
+          type: ZABBIX_ACTIVE
+          key: 'service_state[W32Time]'
+          description: 'Time synchronization status'
+      
+      # Discovery rules
+      discovery_rules:
+        - name: 'Disk discovery'
+          type: ZABBIX_ACTIVE
+          key: 'vfs.fs.discovery'
+          item_prototypes:
+            - name: 'Disk {#FSNAME} space usage'
+              type: ZABBIX_ACTIVE
+              key: 'vfs.fs.size[{#FSNAME},pused]'
+              units: '%'
+
+        - name: 'Network interface discovery'
+          type: ZABBIX_ACTIVE
+          key: 'net.if.discovery'
+          item_prototypes:
+            - name: 'Interface {#IFNAME}: Bits received'
+              type: ZABBIX_ACTIVE
+              key: 'net.if.in[{#IFNAME}]'
+              units: 'bps'
+            - name: 'Interface {#IFNAME}: Bits sent'
+              type: ZABBIX_ACTIVE
+              key: 'net.if.out[{#IFNAME}]'
+              units: 'bps'
+      
+      # Triggers
+      triggers:
+        - name: 'High CPU usage on {HOST.NAME}'
+          expression: 'last(/Template Windows Server 2019 AD DNS/system.cpu.util[,total])>90'
+          priority: WARNING
+
+        - name: 'High memory usage on {HOST.NAME}'
+          expression: 'last(/Template Windows Server 2019 AD DNS/vm.memory.util)>90'
+          priority: WARNING
+
+        - name: 'Disk space is critically low on {HOST.NAME}'
+          expression: 'last(/Template Windows Server 2019 AD DNS/vfs.fs.size[C:,pused])>95'
+          priority: HIGH
+
+        - name: 'AD Replication Issue on {HOST.NAME}'
+          expression: 'last(/Template Windows Server 2019 AD Monitoring/perf_counter["\NTDS\DRA Inbound Bytes Total/sec"])=0'
+          priority: HIGH
+
+        - name: 'AD Database Size Critical on {HOST.NAME}'
+          expression: 'last(/Template Windows Server 2019 AD Monitoring/perf_counter["\NTDS\Database Size (MB)"])>10240'
+          priority: WARNING
+
+        - name: 'Domain Controller Unavailable on {HOST.NAME}'
+          expression: 'last(/Template Windows Server 2019 AD Monitoring/service_state[NTDS])<>0'
+          priority: HIGH
+
+        - name: 'DNS Service Unavailable on {HOST.NAME}'
+          expression: 'last(/Template Windows Server 2019 DNS Monitoring/service_state[DNS])<>0'
+          priority: HIGH
+
+        - name: 'High DNS Query Response Time on {HOST.NAME}'
+          expression: 'last(/Template Windows Server 2019 DNS Monitoring/perf_counter["\DNS\Recursive Query Time"])>1'
+          priority: WARNING
+
+        - name: 'Low DNS Query Success Rate on {HOST.NAME}'
+          expression: 'last(/Template Windows Server 2019 DNS Monitoring/perf_counter["\DNS\Recursive Queries/sec"])<10'
+          priority: WARNING
+
+        - name: 'Critical Event in Directory Service Log on {HOST.NAME}'
+          expression: 'find(/Template Windows Server 2019 General Monitoring/eventlog[Directory Service],,"Error")=1'
+          priority: HIGH
+
+        - name: 'Critical Event in DNS Server Log on {HOST.NAME}'
+          expression: 'find(/Template Windows Server 2019 General Monitoring/eventlog[DNS Server],,"Error")=1'
+          priority: HIGH
+
+        - name: 'Backup Failure on {HOST.NAME}'
+          expression: 'last(/Template Windows Server 2019 General Monitoring/wmi.get[root\cimv2,SELECT * FROM Win32_NTLogEvent WHERE Logfile = 'Application' AND SourceName = 'Backup' AND EventType = 1])<>0'
+          priority: HIGH
+
+        - name: 'Multiple Failed Logon Attempts on {HOST.NAME}'
+          expression: 'count(/Template Windows Server 2019 General Monitoring/eventlog[Security,,,"Event ID=4625"],1h)>10'
+          priority: WARNING
+
+        - name: 'Critical Service Down on {HOST.NAME}'
+          expression: 'last(/Template Windows Server 2019 General Monitoring/service_state[NTDS])<>0 or last(/Template Windows Server 2019 General Monitoring/service_state[Netlogon])<>0 or last(/Template Windows Server 2019 General Monitoring/service_state[DNS])<>0'
+          priority: HIGH
+
+        - name: 'Time Synchronization Issue on {HOST.NAME}'
+          expression: 'last(/Template Windows Server 2019 General Monitoring/service_state[W32Time])<>0'
+          priority: WARNING
